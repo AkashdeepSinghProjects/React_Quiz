@@ -1,21 +1,23 @@
 import Question from "./Question";
 import { useState } from "react";
 import QUESTIONS from "../util/questions";
+import Log from "./Log";
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
   const questionDisplayIndex = userAnswers.length;
   const isQuizComplete = userAnswers.length === QUESTIONS.length;
+  // const isQuizComplete = userAnswers.length === 3;
 
   function handleAnswerInput(answer) {
     setUserAnswers((previousAns) => [...previousAns, answer]);
   }
 
+  function handleRestart() {
+    setUserAnswers([]);
+  }
+
   if (isQuizComplete) {
-    return (
-      <div>
-        <h2>Quiz Complete</h2>
-      </div>
-    );
+    return <Log userAnswerList={userAnswers} onRestart={handleRestart} />;
   }
 
   return (
