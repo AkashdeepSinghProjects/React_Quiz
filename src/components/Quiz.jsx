@@ -19,7 +19,7 @@ export default function Quiz() {
   }
 
   return (
-    <main className=" sm:w-[50%] sm:mx-[25%] bg-slate-500 rounded-sm py-8 px-4 mt-3">
+    <main className=" sm:w-[50%] sm:mx-[25%] bg-[#120331] rounded-2xl py-8 px-4 mt-3">
       <Question
         key={questionDisplayIndex}
         questionIndex={questionDisplayIndex}
