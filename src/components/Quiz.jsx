@@ -23,7 +23,7 @@ export default function Quiz() {
   }
   const isQuizComplete = userAnswers.length === totalDisplayQuestions;
   function handleRestart() {
-    setStartQuiz(true);
+    setStartQuiz(false);
     setUserAnswers([]);
   }
 
