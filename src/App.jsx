@@ -1,10 +1,11 @@
 import Header from "./components/Header";
 import Quiz from "./components/Quiz";
+import QuestionContextProvider from "./data/QuestionContext";
 export default function App() {
   return (
-    <div>
+    <QuestionContextProvider>
       <Header />
       <Quiz />
-    </div>
+    </QuestionContextProvider>
   );
 }

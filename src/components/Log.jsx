@@ -1,14 +1,14 @@
+import { useContext } from "react";
 import QUESTIONS from "../util/questions";
 import Button from "./Button";
 import CircularProgress from "@mui/joy/CircularProgress";
+import { QuestionContext } from "../data/QuestionContext";
 
 export default function Log({ userAnswerList, onRestart }) {
+  const { correctAnswers, totalQuestions } = useContext(QuestionContext);
   let cssClass = " my-2 p-2 rounded-lg ";
-  const correctAnswerlength = userAnswerList.filter(
-    (answer, ind) => answer === QUESTIONS[ind].correctAnswer
-  ).length;
   const correctAnswerPercent = Math.round(
-    (correctAnswerlength / userAnswerList.length) * 100
+    (correctAnswers / totalQuestions) * 100
   );
 
   return (

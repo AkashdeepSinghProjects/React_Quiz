@@ -26,7 +26,7 @@ export default function QuestionTimer({ onUserInputAnswer, time }) {
   return (
     <div className=" my-3">
       <LinearProgress
-        color={valueInPercent < 40 ? "danger" : "success"}
+        color={valueInPercent < 40 && time > 4500 ? "danger" : "success"}
         determinate
         size="lg"
         variant="plain"

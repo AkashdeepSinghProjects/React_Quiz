@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useRef, useState, useContext } from "react";
 import QUESTIONS from "../util/questions";
 import QuestionTimer from "./QuestionTimer";
+import { QuestionContext } from "../data/QuestionContext";
+
 export default function Question({
   questionIndex,
   onUserInputAnswer,
@@ -11,10 +13,16 @@ export default function Question({
     isCorrect: null,
   });
   const [questionTime, setQuestionTime] = useState(questionTimeInitialValue);
-
+  const shuffleAnswers = useRef();
+  const { addCorrectAnswer, addWrongAnswer } = useContext(QuestionContext);
   let lockOptionColor = "bg-[#FCAA67]";
   let cssClass =
     " mt-2 text-2xl font-light rounded-md px-4 text-start hover:bg-[#FCAA67] ";
+
+  if (!shuffleAnswers.current) {
+    shuffleAnswers.current = [...QUESTIONS[questionIndex].options];
+    shuffleAnswers.current.sort(() => 0.5 - Math.random());
+  }
 
   if (userAnswer.answer !== "") {
     cssClass = " mt-2 text-2xl font-light rounded-md px-4 text-start ";
@@ -34,11 +42,13 @@ export default function Question({
     setTimeout(() => {
       // setQuestionTime(1000);
       if (option === QUESTIONS[questionIndex].correctAnswer) {
+        addCorrectAnswer();
         setUserAnswer((prevState) => ({
           ...prevState,
           isCorrect: true,
         }));
       } else {
+        addWrongAnswer();
         setUserAnswer((prevState) => ({
           ...prevState,
           isCorrect: false,
@@ -64,7 +74,7 @@ export default function Question({
         type="1"
         className="mt-3 list-[upper-alpha] list-inside flex flex-col"
       >
-        {QUESTIONS[questionIndex].options.map((option, ind) => (
+        {shuffleAnswers.current.map((option, ind) => (
           <button
             className={
               option === userAnswer.answer

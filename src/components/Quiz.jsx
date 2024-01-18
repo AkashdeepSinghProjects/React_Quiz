@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useContext } from "react";
 import Question from "./Question";
 import StartPage from "./StartPage";
 import QUESTIONS from "../util/questions";
 import Log from "./Log";
+import { QuestionContext } from "../data/QuestionContext";
 
 let totalDisplayQuestions = QUESTIONS.length;
 let questionTime = 15000;
@@ -10,13 +11,16 @@ let questionTime = 15000;
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
   const [startQuiz, setStartQuiz] = useState(false);
+  let { setTotalQuestions, resetQuiz } = useContext(QuestionContext);
 
   const questionDisplayIndex = userAnswers.length;
   const handleAnswerInput = useCallback((answer) => {
     setUserAnswers((previousAns) => [...previousAns, answer]);
   }, []);
   function handleStart(configValues) {
+    resetQuiz();
     totalDisplayQuestions = configValues.numberOfQuestions;
+    setTotalQuestions(configValues.numberOfQuestions);
     questionTime = configValues.time * 1000;
     setStartQuiz(true);
     setUserAnswers([]);
@@ -25,6 +29,7 @@ export default function Quiz() {
   function handleRestart() {
     setStartQuiz(false);
     setUserAnswers([]);
+    resetQuiz();
   }
 
   if (isQuizComplete) {
