@@ -10,12 +10,11 @@ export default function Log({ userAnswerList, onRestart }) {
   const correctAnswerPercent = Math.round(
     (correctAnswerlength / userAnswerList.length) * 100
   );
-  console.log(correctAnswerPercent);
 
   return (
     <div className=" text-white sm:w-[50%] sm:mx-[25%] bg-[#120331] rounded-2xl py-3 px-4 mt-3">
       <h2 className=" text-center text-3xl font-light uppercase">Quiz Log</h2>
-      <div className=" flex justify-evenly">
+      <div className=" flex justify-evenly my-2">
         <CircularProgress
           determinate
           value={correctAnswerPercent}
@@ -35,7 +34,7 @@ export default function Log({ userAnswerList, onRestart }) {
           {100 - correctAnswerPercent}%
         </CircularProgress>
       </div>
-      <div className=" flex justify-end">
+      <div className=" flex justify-end my-2">
         <Button onClick={onRestart} green={true}>
           Restart the quiz
         </Button>
@@ -51,14 +50,24 @@ export default function Log({ userAnswerList, onRestart }) {
                 : cssClass + " bg-red-900"
             }
           >
-            <p>
+            <p id="question-log">
               Q{index + 1}: {QUESTIONS[index].question}
             </p>
-            <p>Your Answer: {answer}</p>
+            {answer ? (
+              <p>
+                <span>Your answer:</span> {answer}
+              </p>
+            ) : (
+              <p>SKIPPED</p>
+            )}
             {QUESTIONS[index].correctAnswer !== answer && (
               <div>
-                <p>Correct Answer: {QUESTIONS[index].correctAnswer} </p>
-                <p>Reasoning: {QUESTIONS[index].reasoning}</p>
+                <p>
+                  <span> Correct Answer:</span> {QUESTIONS[index].correctAnswer}{" "}
+                </p>
+                <p>
+                  <span>Reasoning:</span> {QUESTIONS[index].reasoning}
+                </p>
               </div>
             )}
           </li>

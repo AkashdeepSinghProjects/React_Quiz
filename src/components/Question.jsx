@@ -1,11 +1,21 @@
 import { useState } from "react";
 import QUESTIONS from "../util/questions";
-export default function Question({ questionIndex, onUserInputAnswer }) {
-  const [userAnswer, setUserAnswer] = useState({ answer: "", isCorrect: null });
+import QuestionTimer from "./QuestionTimer";
+export default function Question({
+  questionIndex,
+  onUserInputAnswer,
+  questionTimeInitialValue,
+}) {
+  const [userAnswer, setUserAnswer] = useState({
+    answer: "",
+    isCorrect: null,
+  });
+  const [questionTime, setQuestionTime] = useState(questionTimeInitialValue);
 
   let lockOptionColor = "bg-[#FCAA67]";
   let cssClass =
     " mt-2 text-2xl font-light rounded-md px-4 text-start hover:bg-[#FCAA67] ";
+
   if (userAnswer.answer !== "") {
     cssClass = " mt-2 text-2xl font-light rounded-md px-4 text-start ";
   }
@@ -16,12 +26,23 @@ export default function Question({ questionIndex, onUserInputAnswer }) {
   }
 
   function handleOnOptionClick(option) {
-    setUserAnswer((prevState) => ({ ...prevState, answer: option }));
+    setUserAnswer((prevState) => ({
+      ...prevState,
+      answer: option,
+    }));
+    setQuestionTime(4050);
     setTimeout(() => {
+      // setQuestionTime(1000);
       if (option === QUESTIONS[questionIndex].correctAnswer) {
-        setUserAnswer((prevState) => ({ ...prevState, isCorrect: true }));
+        setUserAnswer((prevState) => ({
+          ...prevState,
+          isCorrect: true,
+        }));
       } else {
-        setUserAnswer((prevState) => ({ ...prevState, isCorrect: false }));
+        setUserAnswer((prevState) => ({
+          ...prevState,
+          isCorrect: false,
+        }));
       }
       setTimeout(() => {
         onUserInputAnswer(option);
@@ -31,6 +52,11 @@ export default function Question({ questionIndex, onUserInputAnswer }) {
 
   return (
     <section className="text-white ">
+      <QuestionTimer
+        key={questionIndex + "" + questionTime}
+        time={questionTime}
+        onUserInputAnswer={onUserInputAnswer}
+      />
       <h2 className="  text-3xl font-light">
         Q{questionIndex + 1}: {QUESTIONS[questionIndex].question}
       </h2>

@@ -1,23 +1,23 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Question from "./Question";
 import StartPage from "./StartPage";
 import QUESTIONS from "../util/questions";
 import Log from "./Log";
+
 let totalDisplayQuestions = QUESTIONS.length;
+let questionTime = 15000;
+
 export default function Quiz() {
   const [userAnswers, setUserAnswers] = useState([]);
   const [startQuiz, setStartQuiz] = useState(false);
 
   const questionDisplayIndex = userAnswers.length;
-
-  // const isQuizComplete = userAnswers.length === 3;
-
-  function handleAnswerInput(answer) {
+  const handleAnswerInput = useCallback((answer) => {
     setUserAnswers((previousAns) => [...previousAns, answer]);
-  }
-
+  }, []);
   function handleStart(configValues) {
     totalDisplayQuestions = configValues.numberOfQuestions;
+    questionTime = configValues.time * 1000;
     setStartQuiz(true);
     setUserAnswers([]);
   }
@@ -38,6 +38,7 @@ export default function Quiz() {
           key={questionDisplayIndex}
           questionIndex={questionDisplayIndex}
           onUserInputAnswer={handleAnswerInput}
+          questionTimeInitialValue={questionTime}
         />
       ) : (
         <StartPage onStart={handleStart} />

@@ -1,12 +1,11 @@
 import Button from "./Button";
 import Slider from "@mui/joy/Slider";
-import Switch from "@mui/joy/Switch";
 import QUESTIONS from "../util/questions";
 import { useState } from "react";
 export default function StartPage({ onStart }) {
   const [configValues, setConfigValues] = useState({
-    numberOfQuestions: 5,
-    isTimeActive: false,
+    numberOfQuestions: 3,
+    time: 15,
   });
 
   function handleChange(type, value) {
@@ -28,13 +27,14 @@ export default function StartPage({ onStart }) {
         onChange={(e) => handleChange("numberOfQuestions", e.target.value)}
       />
       <div className=" flex justify-between">
-        <label className=" text-xl ">Timer :</label>
-        <Switch
-          size="lg"
-          checked={configValues.isTimeActive}
-          onChange={(event) =>
-            handleChange("isTimeActive", event.target.checked)
-          }
+        <label className=" text-xl ">Per Question Time(in seconds) :</label>
+        <input
+          type="number"
+          min={5}
+          max={30}
+          value={configValues.time}
+          onChange={(e) => handleChange("time", e.target.value)}
+          className=" text-black"
         />
       </div>
 
