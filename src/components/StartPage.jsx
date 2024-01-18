@@ -17,8 +17,6 @@ export default function StartPage({ onStart }) {
       <label className=" text-xl">Number of questions: </label>
       <Slider
         color="success"
-        disabled={false}
-        marks={false}
         min={3}
         size="lg"
         valueLabelDisplay="on"
@@ -28,13 +26,14 @@ export default function StartPage({ onStart }) {
       />
       <div className=" flex justify-between">
         <label className=" text-xl ">Per Question Time(in seconds) :</label>
-        <input
-          type="number"
+        <Slider
+          color="success"
           min={5}
+          size="lg"
+          valueLabelDisplay="on"
           max={30}
           value={configValues.time}
           onChange={(e) => handleChange("time", e.target.value)}
-          className=" text-black"
         />
       </div>
 
