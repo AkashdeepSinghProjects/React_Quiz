@@ -16,9 +16,11 @@ export default function QuestionTimer({ onUserInputAnswer, time }) {
   }, [onUserInputAnswer, time, addSkippedAnswers]);
 
   useEffect(() => {
+    const isMobile = window.innerWidth <= 768;
+    const intervalParameter = isMobile ? 100 : 10;
     const interval = setInterval(() => {
-      setProgressBarValue((prev) => prev - 10);
-    }, 10);
+      setProgressBarValue((prev) => prev - intervalParameter);
+    }, intervalParameter);
 
     return () => {
       clearInterval(interval);
