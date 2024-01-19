@@ -3,6 +3,7 @@ import Question from "./Question";
 import StartPage from "./StartPage";
 import QUESTIONS from "../util/questions";
 import Log from "./Log";
+import Button from "./Button";
 import { QuestionContext } from "../data/QuestionContext";
 
 let totalDisplayQuestions = QUESTIONS.length;
@@ -39,12 +40,19 @@ export default function Quiz() {
   return (
     <main className=" sm:w-[50%] sm:mx-[25%] bg-[#120331] rounded-2xl py-8 px-4 mt-3">
       {startQuiz ? (
-        <Question
-          key={questionDisplayIndex}
-          questionIndex={questionDisplayIndex}
-          onUserInputAnswer={handleAnswerInput}
-          questionTimeInitialValue={questionTime}
-        />
+        <>
+          <Question
+            key={questionDisplayIndex}
+            questionIndex={questionDisplayIndex}
+            onUserInputAnswer={handleAnswerInput}
+            questionTimeInitialValue={questionTime}
+          />
+          <div className="flex justify-end mt-11">
+            <Button onClick={handleRestart} red={true}>
+              Reset Quiz
+            </Button>
+          </div>
+        </>
       ) : (
         <StartPage onStart={handleStart} />
       )}
