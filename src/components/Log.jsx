@@ -1,15 +1,21 @@
 import { useContext } from "react";
-import QUESTIONS from "../util/questions";
 import Button from "./Button";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { QuestionContext } from "../data/QuestionContext";
 
 export default function Log({ userAnswerList, onRestart }) {
-  const { correctAnswers, totalQuestions } = useContext(QuestionContext);
+  const {
+    correctAnswers,
+    wrongAnswers,
+    skippedAnswers,
+    totalQuestions,
+    shuffledQuestionsArray,
+  } = useContext(QuestionContext);
   let cssClass = " my-2 p-2 rounded-lg ";
-  const correctAnswerPercent = Math.round(
-    (correctAnswers / totalQuestions) * 100
-  );
+
+  function calculatePercentage(value) {
+    return Math.round((value / totalQuestions) * 100);
+  }
 
   return (
     <div className=" text-white sm:w-[50%] sm:mx-[25%] bg-[#120331] rounded-2xl py-3 px-4 mt-3">
@@ -17,21 +23,30 @@ export default function Log({ userAnswerList, onRestart }) {
       <div className=" flex justify-evenly my-2">
         <CircularProgress
           determinate
-          value={correctAnswerPercent}
+          value={calculatePercentage(correctAnswers)}
           sx={{ "--CircularProgress-size": "80px" }}
           color="success"
           variant="solid"
         >
-          {correctAnswerPercent}%
+          {calculatePercentage(correctAnswers)}%
         </CircularProgress>
         <CircularProgress
           determinate
-          value={100 - correctAnswerPercent}
+          value={calculatePercentage(wrongAnswers)}
           sx={{ "--CircularProgress-size": "80px" }}
           color="danger"
           variant="solid"
         >
-          {100 - correctAnswerPercent}%
+          {calculatePercentage(wrongAnswers)}%
+        </CircularProgress>
+        <CircularProgress
+          color="warning"
+          determinate
+          value={calculatePercentage(skippedAnswers)}
+          sx={{ "--CircularProgress-size": "80px" }}
+          variant="solid"
+        >
+          {calculatePercentage(skippedAnswers)}%
         </CircularProgress>
       </div>
       <div className=" flex justify-end my-2">
@@ -45,13 +60,15 @@ export default function Log({ userAnswerList, onRestart }) {
           <li
             key={index}
             className={
-              QUESTIONS[index].correctAnswer === answer
+              shuffledQuestionsArray[index].correctAnswer === answer
                 ? cssClass + " bg-green-800"
+                : answer === null
+                ? cssClass + " bg-amber-800"
                 : cssClass + " bg-red-900"
             }
           >
             <p id="question-log">
-              Q{index + 1}: {QUESTIONS[index].question}
+              Q{index + 1}: {shuffledQuestionsArray[index].question}
             </p>
             {answer ? (
               <p>
@@ -60,13 +77,15 @@ export default function Log({ userAnswerList, onRestart }) {
             ) : (
               <p>SKIPPED</p>
             )}
-            {QUESTIONS[index].correctAnswer !== answer && (
+            {shuffledQuestionsArray[index].correctAnswer !== answer && (
               <div>
                 <p>
-                  <span> Correct Answer:</span> {QUESTIONS[index].correctAnswer}{" "}
+                  <span> Correct Answer:</span>{" "}
+                  {shuffledQuestionsArray[index].correctAnswer}{" "}
                 </p>
                 <p>
-                  <span>Reasoning:</span> {QUESTIONS[index].reasoning}
+                  <span>Reasoning:</span>{" "}
+                  {shuffledQuestionsArray[index].reasoning}
                 </p>
               </div>
             )}

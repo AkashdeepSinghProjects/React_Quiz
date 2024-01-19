@@ -2,7 +2,7 @@ import logo from "../assets/CerebralCraze-logos.jpeg";
 import { useContext } from "react";
 import { QuestionContext } from "../data/QuestionContext";
 export default function Header() {
-  const { totalQuestions, correctAnswers, wrongAnswers } =
+  const { totalQuestions, correctAnswers, wrongAnswers, skippedAnswers } =
     useContext(QuestionContext);
   return (
     <header className=" text-white sm:w-[80%] sm:mx-[10%]">
@@ -11,8 +11,15 @@ export default function Header() {
         <div className=" flex justify-end">
           <div>
             <p>Total Questions: {totalQuestions} </p>
-            <p className=" text-[#8CFF98]">Correct Answers: {correctAnswers}</p>
-            <p className=" text-[#FB3640]">Wrong Answers: {wrongAnswers} </p>
+            <p className=" text-[#8CFF98]">
+              Correct Answer{correctAnswers > 1 && "s"}: {correctAnswers}
+            </p>
+            <p className=" text-[#FB3640]">
+              Wrong Answer{wrongAnswers > 1 && "s"}: {wrongAnswers}{" "}
+            </p>
+            <p className=" text-amber-800">
+              Skipped Answer{skippedAnswers > 1 && "s"}: {skippedAnswers}
+            </p>
           </div>
         </div>
       )}

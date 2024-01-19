@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { LinearProgress } from "@mui/joy";
+import { QuestionContext } from "../data/QuestionContext";
 export default function QuestionTimer({ onUserInputAnswer, time }) {
   const [progressBarValue, setProgressBarValue] = useState(time);
-
+  const { addSkippedAnswers } = useContext(QuestionContext);
   useEffect(() => {
     const timeout = setTimeout(() => {
+      addSkippedAnswers();
       onUserInputAnswer(null);
     }, time);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [onUserInputAnswer, time]);
+  }, [onUserInputAnswer, time, addSkippedAnswers]);
 
   useEffect(() => {
     const interval = setInterval(() => {

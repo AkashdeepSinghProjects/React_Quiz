@@ -1,5 +1,4 @@
 import { useRef, useState, useContext } from "react";
-import QUESTIONS from "../util/questions";
 import QuestionTimer from "./QuestionTimer";
 import { QuestionContext } from "../data/QuestionContext";
 
@@ -14,13 +13,14 @@ export default function Question({
   });
   const [questionTime, setQuestionTime] = useState(questionTimeInitialValue);
   const shuffleAnswers = useRef();
-  const { addCorrectAnswer, addWrongAnswer } = useContext(QuestionContext);
+  const { addCorrectAnswer, addWrongAnswer, shuffledQuestionsArray } =
+    useContext(QuestionContext);
   let lockOptionColor = "bg-[#FCAA67]";
   let cssClass =
     " mt-2 text-2xl font-light rounded-md px-4 text-start hover:bg-[#FCAA67] ";
 
   if (!shuffleAnswers.current) {
-    shuffleAnswers.current = [...QUESTIONS[questionIndex].options];
+    shuffleAnswers.current = [...shuffledQuestionsArray[questionIndex].options];
     shuffleAnswers.current.sort(() => 0.5 - Math.random());
   }
 
@@ -41,7 +41,7 @@ export default function Question({
     setQuestionTime(4050);
     setTimeout(() => {
       // setQuestionTime(1000);
-      if (option === QUESTIONS[questionIndex].correctAnswer) {
+      if (option === shuffledQuestionsArray[questionIndex].correctAnswer) {
         addCorrectAnswer();
         setUserAnswer((prevState) => ({
           ...prevState,
@@ -68,7 +68,7 @@ export default function Question({
         onUserInputAnswer={onUserInputAnswer}
       />
       <h2 className="  text-3xl font-light">
-        Q{questionIndex + 1}: {QUESTIONS[questionIndex].question}
+        Q{questionIndex + 1}: {shuffledQuestionsArray[questionIndex].question}
       </h2>
       <ol
         type="1"
