@@ -11,14 +11,14 @@ export default function Header() {
         <div className=" flex justify-end">
           <div>
             <p>Total Questions: {totalQuestions} </p>
+            <p className=" text-amber-800">
+              Skipped Question{skippedAnswers > 1 && "s"}: {skippedAnswers}
+            </p>
             <p className=" text-[#8CFF98]">
               Correct Answer{correctAnswers > 1 && "s"}: {correctAnswers}
             </p>
             <p className=" text-[#FB3640]">
               Wrong Answer{wrongAnswers > 1 && "s"}: {wrongAnswers}{" "}
-            </p>
-            <p className=" text-amber-800">
-              Skipped Answer{skippedAnswers > 1 && "s"}: {skippedAnswers}
             </p>
           </div>
         </div>
