@@ -17,7 +17,7 @@ export default function QuestionTimer({ onUserInputAnswer, time }) {
 
   useEffect(() => {
     const isMobile = window.innerWidth <= 768;
-    const intervalParameter = isMobile ? 200 : 10;
+    const intervalParameter = isMobile ? 50 : 10;
     const interval = setInterval(() => {
       setProgressBarValue((prev) => prev - intervalParameter);
     }, intervalParameter);
