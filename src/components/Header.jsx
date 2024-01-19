@@ -10,7 +10,7 @@ export default function Header() {
         <img src={logo} className=" rounded-full h-48 w-48 mx-auto" />
       </div>
 
-      {totalQuestions >= 0 && (
+      {totalQuestions > 0 && (
         <div className=" flex sm:justify-end justify-center mt-4 sm:mt-0 min-w-fit">
           <div>
             <p>Total Questions: {totalQuestions} </p>
