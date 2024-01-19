@@ -13,8 +13,8 @@ export default function StartPage({ onStart }) {
   }
 
   return (
-    <div className=" text-white">
-      <div className=" flex justify-between my-3">
+    <div className=" text-white mx-3 sm:mx-0">
+      <div className="  flex-col justify-between my-3">
         <label className=" text-xl">Number of questions: </label>
         <Slider
           color="success"
@@ -26,8 +26,10 @@ export default function StartPage({ onStart }) {
           onChange={(e) => handleChange("numberOfQuestions", e.target.value)}
         />
       </div>
-      <div className=" flex justify-between my-3">
-        <label className=" text-xl me-3">Per Question Time(in seconds) :</label>
+      <div className=" flex-col justify-between my-3">
+        <label className=" text-xl me-3">
+          Per Question Time(in sec&apos;s) :
+        </label>
         <Slider
           color="success"
           min={5}

@@ -5,10 +5,13 @@ export default function Header() {
   const { totalQuestions, correctAnswers, wrongAnswers, skippedAnswers } =
     useContext(QuestionContext);
   return (
-    <header className=" text-white sm:w-[80%] sm:mx-[10%]">
-      <img src={logo} className=" rounded-full h-48 w-48 mt-3 mx-auto" />
-      {totalQuestions > 0 && (
-        <div className=" flex justify-end">
+    <header className=" text-white sm:mt-5 sm:w-[65%] sm:ms-[25%] sm:me-[10%] sm:flex">
+      <div className=" sm:w-[50vw] mt-4 sm:mt-0">
+        <img src={logo} className=" rounded-full h-48 w-48 mx-auto" />
+      </div>
+
+      {totalQuestions >= 0 && (
+        <div className=" flex sm:justify-end justify-center mt-4 sm:mt-0 min-w-fit">
           <div>
             <p>Total Questions: {totalQuestions} </p>
             <p className=" text-amber-800">
